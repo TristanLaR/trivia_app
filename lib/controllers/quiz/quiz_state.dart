@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trivia_app/models/question_model.dart';
 import 'package:meta/meta.dart';
 

@@ -6,7 +6,6 @@ import 'package:trivia_app/models/failure_model.dart';
 import 'package:trivia_app/models/question_model.dart';
 import 'package:trivia_app/enums/difficulty.dart';
 import 'package:trivia_app/repositories/base_quiz_repository.dart';
-import 'package:trivia_app/repositories/base_quiz_repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:meta/meta.dart';
 

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -230,7 +231,6 @@ class QuizResults extends StatelessWidget {
   }
 }
 
-//TODO QuizQuestions
 class QuizQuestions extends StatelessWidget {
   final PageController pageController;
   final QuizState state;
@@ -320,6 +320,88 @@ class AnswerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          vertical: 12.0,
+          horizontal: 20.0,
+        ),
+        padding: EdgeInsets.symmetric(
+          vertical: 12.0,
+          horizontal: 20.0,
+        ),
+        width: double.infinity,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: boxShadow,
+            border: Border.all(
+              color: isDisplayingAnswer
+                  ? isCorrect
+                      ? Colors.green
+                      : isSelected
+                          ? Colors.red
+                          : Colors.white
+                  : Colors.white,
+              width: 4.0,
+            ),
+            borderRadius: BorderRadius.circular(100.0)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                HtmlCharacterEntities.decode(answer),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontWeight: isDisplayingAnswer && isCorrect
+                      ? FontWeight.bold
+                      : FontWeight.w400,
+                ),
+              ),
+            ),
+            if (isDisplayingAnswer)
+              isCorrect
+                  ? const CircularIcon(icon: Icons.check, color: Colors.green)
+                  : isSelected
+                      ? const CircularIcon(
+                          icon: Icons.close,
+                          color: Colors.red,
+                        )
+                      : const SizedBox.shrink()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CircularIcon extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+
+  const CircularIcon({
+    Key key,
+    @required this.icon,
+    @required this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 24.0,
+      width: 24.0,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        boxShadow: boxShadow,
+      ),
+      child: Icon(
+        icon,
+        color: Colors.white,
+        size: 16.0,
+      ),
+    );
   }
 }
