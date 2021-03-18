@@ -73,7 +73,7 @@ class QuizScreen extends HookWidget {
               title: pageController.page.toInt() + 1 < questions.length
                   ? 'Next Question'
                   : 'See Results',
-              ontap: () {
+              onTap: () {
                 context
                     .read(quizControllerProvider)
                     .nextQuestion(questions, pageController.page.toInt());
@@ -110,7 +110,6 @@ class QuizScreen extends HookWidget {
   }
 }
 
-//TODO QuizError
 class QuizError extends StatelessWidget {
   final String message;
 
@@ -121,15 +120,66 @@ class QuizError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          message,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        CustomButton(
+          title: 'Retry',
+          onTap: () => context.refresh(quizRepositoryProvider),
+        )
+      ]),
+    );
   }
 }
 
-// TODO CustomButton
+final List<BoxShadow> boxShadow = const [
+  BoxShadow(
+    blurRadius: 4.0,
+    color: Colors.black26,
+    offset: Offset(0, 2),
+  ),
+];
+
 class CustomButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+
+  const CustomButton({
+    Key key,
+    @required this.title,
+    @required this.onTap,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.all(20.0),
+        height: 50.0,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.yellow[700],
+          boxShadow: boxShadow,
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -182,6 +232,17 @@ class QuizResults extends StatelessWidget {
 
 //TODO QuizQuestions
 class QuizQuestions extends StatelessWidget {
+  final PageController pageController;
+  final QuizState state;
+  final List<Question> questions;
+
+  const QuizQuestions({
+    Key key,
+    @required this.pageController,
+    @required this.state,
+    @required this.questions,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container();
