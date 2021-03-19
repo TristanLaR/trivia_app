@@ -25,9 +25,10 @@ class MyApp extends StatelessWidget {
         title: "Trivia App",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            primarySwatch: Colors.yellow,
-            bottomSheetTheme: const BottomSheetThemeData(
-                backgroundColor: Colors.transparent)),
+          primarySwatch: Colors.yellow,
+          bottomSheetTheme:
+              const BottomSheetThemeData(backgroundColor: Colors.transparent),
+        ),
         home: QuizScreen(),
       ),
     );
