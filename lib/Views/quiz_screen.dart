@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trivia_app/Helpers/helpers.dart';
+import 'package:trivia_app/Views/home_screen.dart';
 import 'package:trivia_app/Views/quiz_error.dart';
 import 'package:trivia_app/Views/quiz_questions.dart';
 import 'package:trivia_app/Views/quiz_results.dart';
@@ -18,7 +19,7 @@ final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
   (ref) => ref.watch(quizRepositoryProvider).getQuestions(
         numQuestions: 5,
         categoryId: Random().nextInt(24) + 9,
-        difficulty: Difficulty.any,
+        difficulty: Difficulty.easy,
       ),
 );
 
@@ -81,7 +82,9 @@ class QuizScreen extends HookWidget {
     if (questions.isEmpty) return QuizError(message: 'No Questions found.');
 
     final quizState = useProvider(quizControllerProvider.state);
-    return quizState.status == QuizStatus.complete
+    return quizState.status == QuizStatus.initial
+    ? HomeScreen()
+    : quizState.status == QuizStatus.complete
         ? QuizResults(state: quizState, questions: questions)
         : QuizQuestions(
             pageController: pageController,
