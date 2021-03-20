@@ -45,7 +45,7 @@ class QuizResults extends StatelessWidget {
           title: 'New Quiz',
           onTap: () {
             context.refresh(quizRepositoryProvider);
-            context.read(quizControllerProvider);
+            context.read(quizControllerProvider).reset();
           },
         ),
       ],
