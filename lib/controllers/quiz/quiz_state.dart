@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:trivia_app/models/question_model.dart';
 import 'package:meta/meta.dart';
 
-enum QuizStatus { initial, correct, incorrect, complete }
+enum QuizStatus { start, initial, correct, incorrect, complete }
 
 class QuizState extends Equatable {
   final String selectedAnswer;
@@ -26,6 +26,15 @@ class QuizState extends Equatable {
       correct: [],
       incorrect: [],
       status: QuizStatus.initial,
+    );
+  }
+
+  factory QuizState.start() {
+    return QuizState(
+      selectedAnswer: '',
+      correct: [],
+      incorrect: [],
+      status: QuizStatus.start,
     );
   }
 

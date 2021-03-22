@@ -8,7 +8,7 @@ final quizControllerProvider =
 );
 
 class QuizController extends StateNotifier<QuizState> {
-  QuizController() : super(QuizState.initial());
+  QuizController() : super(QuizState.start());
 
   void submitAnswer(Question currentQuestion, String answer) {
     if (state.answered) return;
@@ -35,7 +35,11 @@ class QuizController extends StateNotifier<QuizState> {
             : QuizStatus.complete);
   }
 
-  void reset() {
+  void startQuiz() {
     state = QuizState.initial();
+  }
+
+  void reset() {
+    state = QuizState.start();
   }
 }

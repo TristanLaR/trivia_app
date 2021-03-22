@@ -23,7 +23,7 @@ final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
       ),
 );
 
-class QuizScreen extends HookWidget {
+class ScreenController extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final quizQuestions = useProvider(quizQuestionsProvider);
@@ -82,7 +82,7 @@ class QuizScreen extends HookWidget {
     if (questions.isEmpty) return QuizError(message: 'No Questions found.');
 
     final quizState = useProvider(quizControllerProvider.state);
-    return quizState.status == QuizStatus.initial
+    return quizState.status == QuizStatus.start
     ? HomeScreen()
     : quizState.status == QuizStatus.complete
         ? QuizResults(state: quizState, questions: questions)

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/Helpers/helpers.dart';
+import 'package:trivia_app/controllers/quiz/quiz_controller.dart';
 import 'package:trivia_app/enums/difficulty.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:trivia_app/repositories/quiz_repository.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -39,7 +42,7 @@ class HomeScreen extends StatelessWidget {
         bottomSheet: CustomButton(
           title: 'Start Quiz',
           onTap: () {
-            Navigator.pushNamed(context, '/quiz');
+            context.read(quizControllerProvider).startQuiz();
           },
         ),
       ),
