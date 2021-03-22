@@ -21,7 +21,7 @@ class QuizController extends StateNotifier<QuizState> {
     } else {
       state = state.copyWith(
         selectedAnswer: answer,
-        correct: state.incorrect..add(currentQuestion),
+        incorrect: state.incorrect..add(currentQuestion),
         status: QuizStatus.incorrect,
       );
     }
