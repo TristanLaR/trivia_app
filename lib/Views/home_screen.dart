@@ -63,21 +63,41 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<Category>(
-      value: _chosenValue,
-      style: TextStyle(color: Colors.black),
-      items: categories.map((item) {
-        return new DropdownMenuItem<Category>(
-          child: new Text(item.categoryName),
-          value: item,
-        );
-      }).toList(),
-      hint: Text("Category"),
-      onChanged: (Category category) {
-        setState(() {
-          _chosenValue = category;
-        });
-      },
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
+        child: DropdownButton<Category>(
+          value: _chosenValue,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+          ),
+          items: categories.map((item) {
+            return new DropdownMenuItem<Category>(
+              child: new Text(item.categoryName),
+              value: item,
+            );
+          }).toList(),
+          hint: Text(
+            "Category",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          underline: Container(),
+          onChanged: (Category category) {
+            setState(() {
+              _chosenValue = category;
+            });
+          },
+        ),
+      ),
     );
   }
 }
