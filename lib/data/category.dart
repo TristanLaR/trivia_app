@@ -10,11 +10,6 @@ class Category {
   });
 }
 
-Category sports = Category(
-  categoryName: 'Sports',
-  categoryID: 9
-);
-
 List<Category> categories = [
     Category(categoryID: 9, categoryName: "General Knowledge" ),
     Category(categoryID: 10, categoryName: "Entertainment: Books" ),

@@ -40,36 +40,8 @@ class ScreenController extends HookWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: quizQuestions.when(
-          data: (questions) => _buildBody(context, pageController, questions),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, _) => QuizError(
-            message: error is Failure ? error.message : 'Something went wrong!',
-          ),
-        ),
-        bottomSheet: quizQuestions.maybeWhen(
-          data: (questions) {
-            final quizState = useProvider(quizControllerProvider.state);
-            if (!quizState.answered) return const SizedBox.shrink();
-            return CustomButton(
-              title: pageController.page.toInt() + 1 < questions.length
-                  ? 'Next Question'
-                  : 'See Results',
-              onTap: () {
-                context
-                    .read(quizControllerProvider)
-                    .nextQuestion(questions, pageController.page.toInt());
-                if (pageController.page.toInt() + 1 < questions.length) {
-                  pageController.nextPage(
-                    duration: const Duration(milliseconds: 250),
-                    curve: Curves.linear,
-                  );
-                }
-              },
-            );
-          },
-          orElse: () => const SizedBox.shrink(),
-        ),
+        body: _buildBody(context, pageController),
+        bottomSheet: _bottomsheet(context, pageController),
       ),
     );
   }
@@ -77,19 +49,58 @@ class ScreenController extends HookWidget {
   Widget _buildBody(
     BuildContext context,
     PageController pageController,
-    List<Question> questions,
+    //List<Question> questions,
   ) {
-    if (questions.isEmpty) return QuizError(message: 'No Questions found.');
-
     final quizState = useProvider(quizControllerProvider.state);
-    return quizState.status == QuizStatus.start
-    ? HomeScreen()
-    : quizState.status == QuizStatus.complete
-        ? QuizResults(state: quizState, questions: questions)
-        : QuizQuestions(
-            pageController: pageController,
-            state: quizState,
-            questions: questions,
-          );
+
+    if (quizState.status == QuizStatus.start) return HomeScreen();
+
+    final quizQuestions = useProvider(quizQuestionsProvider);
+    if (quizQuestions.data == null)
+      return QuizError(message: 'No Questions found.');
+    if (quizState.status == QuizStatus.complete)
+      return QuizResults(state: quizState, questions: quizQuestions.data.value);
+
+    return quizQuestions.when(
+      data: (questions) => QuizQuestions(
+          pageController: pageController,
+          state: quizState,
+          questions: questions),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _) => QuizError(
+        message: error is Failure ? error.message : 'Something went wrong!',
+      ),
+    );
+  }
+
+  Widget _bottomsheet(
+    BuildContext context,
+    PageController pageController,
+  ) {
+    final quizQuestions = useProvider(quizQuestionsProvider);
+
+    return quizQuestions.maybeWhen(
+      data: (questions) {
+        final quizState = useProvider(quizControllerProvider.state);
+        if (!quizState.answered) return const SizedBox.shrink();
+        return CustomButton(
+          title: pageController.page.toInt() + 1 < questions.length
+              ? 'Next Question'
+              : 'See Results',
+          onTap: () {
+            context
+                .read(quizControllerProvider)
+                .nextQuestion(questions, pageController.page.toInt());
+            if (pageController.page.toInt() + 1 < questions.length) {
+              pageController.nextPage(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.linear,
+              );
+            }
+          },
+        );
+      },
+      orElse: () => const SizedBox.shrink(),
+    );
   }
 }
