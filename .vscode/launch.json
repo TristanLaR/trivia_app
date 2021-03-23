@@ -1,0 +1,24 @@
+{
+    // launch.json
+    "version": "0.2.0",
+    "configurations": [
+        {
+        "name": "Flutter for web",
+        "type": "dart",
+        "request": "launch",
+        "program": "lib/main.dart",
+        "flutterMode": "debug",
+        "args": [
+            "--web-port=18080",
+            "--web-enable-expression-evaluation"
+        ],
+      },
+      {
+        "name": "Launch Chrome",
+        "request": "launch",
+        "type": "pwa-chrome",
+        "url": "http://larusic.dev/web",
+        "webRoot": "${workspaceFolder}"
+    }
+    ]
+  }

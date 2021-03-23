@@ -26,7 +26,6 @@ final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
 class ScreenController extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final quizQuestions = useProvider(quizQuestionsProvider);
     final pageController = usePageController();
     return Container(
       height: MediaQuery.of(context).size.height,
