@@ -1,5 +1,5 @@
 import 'package:trivia_app/models/question_model.dart';
-import 'package:trivia_app/enums/difficulty.dart';
+import 'package:trivia_app/data/difficulty.dart';
 
 
 abstract class BaseQuizRepository {

@@ -10,7 +10,7 @@ import 'package:trivia_app/Views/quiz_questions.dart';
 import 'package:trivia_app/Views/quiz_results.dart';
 import 'package:trivia_app/controllers/quiz/quiz_controller.dart';
 import 'package:trivia_app/controllers/quiz/quiz_state.dart';
-import 'package:trivia_app/enums/difficulty.dart';
+import 'package:trivia_app/data/difficulty.dart';
 import 'package:trivia_app/models/failure_model.dart';
 import 'package:trivia_app/models/question_model.dart';
 import 'package:trivia_app/repositories/quiz_repository.dart';

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trivia_app/Helpers/helpers.dart';
 import 'package:trivia_app/controllers/quiz/quiz_controller.dart';
-import 'package:trivia_app/enums/difficulty.dart';
+import 'package:trivia_app/data/category.dart';
+import 'package:trivia_app/data/difficulty.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trivia_app/repositories/quiz_repository.dart';
 
@@ -37,6 +38,8 @@ class HomeScreen extends StatelessWidget {
               indent: 20.0,
               endIndent: 20.0,
             ),
+            const SizedBox(height: 30.0),
+            CategoryDropdown(),
           ],
         ),
         bottomSheet: CustomButton(
@@ -46,6 +49,35 @@ class HomeScreen extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class CategoryDropdown extends StatefulWidget {
+  @override
+  _CategoryDropdownState createState() => _CategoryDropdownState();
+}
+
+class _CategoryDropdownState extends State<CategoryDropdown> {
+  Category _chosenValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<Category>(
+      value: _chosenValue,
+      style: TextStyle(color: Colors.black),
+      items: categories.map((item) {
+        return new DropdownMenuItem<Category>(
+          child: new Text(item.categoryName),
+          value: item,
+        );
+      }).toList(),
+      hint: Text("Category"),
+      onChanged: (Category category) {
+        setState(() {
+          _chosenValue = category;
+        });
+      },
     );
   }
 }
