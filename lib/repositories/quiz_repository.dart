@@ -40,6 +40,7 @@ class QuizRepository extends BaseQuizRepository {
         'https://opentdb.com/api.php',
         queryParameters: queryParameters,
       );
+      print("fetch");
 
       if (response.statusCode == 200) {
         final data = Map<String, dynamic>.from(response.data);
