@@ -26,6 +26,7 @@ final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
 class ScreenController extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final quizQuestions = useProvider(quizQuestionsProvider);
     final pageController = usePageController();
     return Container(
       height: MediaQuery.of(context).size.height,
@@ -39,8 +40,36 @@ class ScreenController extends HookWidget {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: _buildBody(context, pageController),
-        bottomSheet: _bottomsheet(context, pageController),
+        body: quizQuestions.when(
+          data: (questions) => _buildBody(context, pageController, questions),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, _) => QuizError(
+            message: error is Failure ? error.message : 'Something went wrong!',
+          ),
+        ),
+        bottomSheet: quizQuestions.maybeWhen(
+          data: (questions) {
+            final quizState = useProvider(quizControllerProvider.state);
+            if (!quizState.answered) return const SizedBox.shrink();
+            return CustomButton(
+              title: pageController.page.toInt() + 1 < questions.length
+                  ? 'Next Question'
+                  : 'See Results',
+              onTap: () {
+                context
+                    .read(quizControllerProvider)
+                    .nextQuestion(questions, pageController.page.toInt());
+                if (pageController.page.toInt() + 1 < questions.length) {
+                  pageController.nextPage(
+                    duration: const Duration(milliseconds: 250),
+                    curve: Curves.linear,
+                  );
+                }
+              },
+            );
+          },
+          orElse: () => const SizedBox.shrink(),
+        ),
       ),
     );
   }
@@ -48,54 +77,17 @@ class ScreenController extends HookWidget {
   Widget _buildBody(
     BuildContext context,
     PageController pageController,
-    //List<Question> questions,
+    List<Question> questions,
   ) {
-    final quizState = useProvider(quizControllerProvider.state);
-
-    if (quizState.status == QuizStatus.start) return HomeScreen();
-
-    final quizQuestions = useProvider(quizQuestionsProvider);
-    // final quizQuestions = useProvider(quizQuestionsProvider);
-    // if (quizQuestions.data == null)
-    //   return QuizError(message: 'No Questions found.');
-    if (quizState.status == QuizStatus.complete)
-      return QuizResults(state: quizState, questions: quizQuestions.data.value);
-
-    return quizQuestions.when(
-      data: (questions) => QuizQuestions(
-          pageController: pageController,
-          state: quizState,
-          questions: questions),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, _) => QuizError(
-        message: error is Failure ? error.message : 'Something went wrong!',
-      ),
-    );
-  }
-
-  Widget _bottomsheet(
-    BuildContext context,
-    PageController pageController,
-  ) {
-    // final quizQuestions = useProvider(quizQuestionsProvider);
-    final quizQuestions = context.read(quizQuestionsProvider);
+    if (questions.isEmpty) return QuizError(message: 'No questions found.');
 
     final quizState = useProvider(quizControllerProvider.state);
-    if (!quizState.answered) return const SizedBox.shrink();
-    return CustomButton(
-      title: pageController.page.toInt() + 1 < quizQuestions.data.value.length
-          ? 'Next Question'
-          : 'See Results',
-      onTap: () {
-        context.read(quizControllerProvider).nextQuestion(
-            quizQuestions.data.value, pageController.page.toInt());
-        if (pageController.page.toInt() + 1 < quizQuestions.data.value.length) {
-          pageController.nextPage(
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.linear,
+    return quizState.status == QuizStatus.complete
+        ? QuizResults(state: quizState, questions: questions)
+        : QuizQuestions(
+            pageController: pageController,
+            state: quizState,
+            questions: questions,
           );
-        }
-      },
-    );
   }
 }
