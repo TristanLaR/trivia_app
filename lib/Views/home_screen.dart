@@ -7,6 +7,8 @@ import 'package:trivia_app/data/category.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trivia_app/repositories/quiz_repository.dart';
 
+final categoryProvider = StateProvider<Category>((ref) => Category());
+
 class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
@@ -101,6 +103,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
           onChanged: (Category category) {
             setState(() {
               _chosenValue = category;
+              context.read(categoryProvider).state = _chosenValue;
             });
           },
         ),

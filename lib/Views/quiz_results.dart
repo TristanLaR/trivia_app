@@ -44,6 +44,7 @@ class QuizResults extends StatelessWidget {
         CustomButton(
           title: 'New Quiz',
           onTap: () {
+            Navigator.pop(context);
             context.refresh(quizRepositoryProvider);
             context.read(quizControllerProvider).reset();
           },

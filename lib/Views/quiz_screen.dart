@@ -16,12 +16,15 @@ import 'package:trivia_app/models/question_model.dart';
 import 'package:trivia_app/repositories/quiz_repository.dart';
 
 final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
-  (ref) => ref.watch(quizRepositoryProvider).getQuestions(
+  (ref) async {
+  final category = ref.watch(categoryProvider);
+
+  return ref.watch(quizRepositoryProvider).getQuestions(
         numQuestions: 5,
-        categoryId: Random().nextInt(24) + 9,
+        categoryId: category.state.categoryID,
         difficulty: Difficulty.easy,
-      ),
-);
+      );
+});
 
 class ScreenController extends HookWidget {
   @override
