@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:trivia_app/Helpers/helpers.dart';
 import 'package:trivia_app/Views/quiz_screen.dart';
-import 'package:trivia_app/controllers/quiz/quiz_controller.dart';
 import 'package:trivia_app/data/category.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trivia_app/data/difficulty.dart';
-import 'package:trivia_app/repositories/quiz_repository.dart';
 
 final categoryProvider = StateProvider<Category>((ref) => Category());
 final difficultyProvider = StateProvider<Difficulty>((ref) => Difficulty.any);
@@ -159,7 +157,8 @@ class _DifficultyDropdownState extends State<DifficultyDropdown> {
           ),
           items: Difficulty.values.map((Difficulty _difficulty) {
             return new DropdownMenuItem<Difficulty>(
-              child: new Text(EnumToString.convertToString(_difficulty)),
+              child: new Text(
+                  EnumToString.convertToString(_difficulty).capitalize()),
               value: _difficulty,
             );
           }).toList(),
