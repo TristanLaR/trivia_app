@@ -63,7 +63,7 @@ class HomeScreen extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 300.0),
           ],
         ),
         bottomSheet: CustomButton(
@@ -100,6 +100,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
         child: DropdownButton<Category>(
+          isExpanded: true,
           value: _chosenValue,
           style: TextStyle(
             color: Colors.black,
@@ -114,9 +115,8 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
           hint: Text(
             "Category",
             style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
+              color: Colors.grey,
+              fontSize: 18,
             ),
           ),
           underline: Container(),
@@ -151,6 +151,7 @@ class _DifficultyDropdownState extends State<DifficultyDropdown> {
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
         child: DropdownButton<Difficulty>(
           value: _difficulty,
+          isExpanded: true,
           style: TextStyle(
             color: Colors.black,
             fontSize: 15,
@@ -165,9 +166,8 @@ class _DifficultyDropdownState extends State<DifficultyDropdown> {
           hint: Text(
             "Difficulty",
             style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
+              color: Colors.grey,
+              fontSize: 18,
             ),
           ),
           underline: Container(),
