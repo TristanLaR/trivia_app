@@ -1,3 +1,4 @@
+import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:trivia_app/Helpers/helpers.dart';
@@ -5,9 +6,11 @@ import 'package:trivia_app/Views/quiz_screen.dart';
 import 'package:trivia_app/controllers/quiz/quiz_controller.dart';
 import 'package:trivia_app/data/category.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:trivia_app/data/difficulty.dart';
 import 'package:trivia_app/repositories/quiz_repository.dart';
 
 final categoryProvider = StateProvider<Category>((ref) => Category());
+final difficultyProvider = StateProvider<Difficulty>((ref) => Difficulty.any);
 
 class HomeScreen extends HookWidget {
   @override
@@ -25,15 +28,20 @@ class HomeScreen extends HookWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 48.0),
-            Text(
-              'Trivia App',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-                fontWeight: FontWeight.w500,
-              ),
+            Column(
+              children: [
+                Text(
+                  'Trivia App',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
             Divider(
               color: Colors.grey[200],
@@ -42,8 +50,22 @@ class HomeScreen extends HookWidget {
               indent: 20.0,
               endIndent: 20.0,
             ),
-            const SizedBox(height: 30.0),
-            CategoryDropdown(),
+            // const SizedBox(height: 100.0),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CategoryDropdown(),
+                    SizedBox(height: 32.0),
+                    DifficultyDropdown(),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 50.0),
           ],
         ),
         bottomSheet: CustomButton(
@@ -104,6 +126,56 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
             setState(() {
               _chosenValue = category;
               context.read(categoryProvider).state = _chosenValue;
+            });
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class DifficultyDropdown extends StatefulWidget {
+  @override
+  _DifficultyDropdownState createState() => _DifficultyDropdownState();
+}
+
+class _DifficultyDropdownState extends State<DifficultyDropdown> {
+  Difficulty _difficulty;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 5),
+        child: DropdownButton<Difficulty>(
+          value: _difficulty,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+          ),
+          items: Difficulty.values.map((Difficulty _difficulty) {
+            return new DropdownMenuItem<Difficulty>(
+              child: new Text(EnumToString.convertToString(_difficulty)),
+              value: _difficulty,
+            );
+          }).toList(),
+          hint: Text(
+            "Difficulty",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          underline: Container(),
+          onChanged: (Difficulty difficulty) {
+            setState(() {
+              _difficulty = difficulty;
+              context.read(difficultyProvider).state = _difficulty;
             });
           },
         ),

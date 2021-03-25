@@ -18,11 +18,12 @@ import 'package:trivia_app/repositories/quiz_repository.dart';
 final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
   (ref) async {
   final category = ref.watch(categoryProvider);
+  final difficulty = ref.watch(difficultyProvider);
 
   return ref.watch(quizRepositoryProvider).getQuestions(
         numQuestions: 5,
         categoryId: category.state.categoryID,
-        difficulty: Difficulty.easy,
+        difficulty: difficulty.state,
       );
 });
 
