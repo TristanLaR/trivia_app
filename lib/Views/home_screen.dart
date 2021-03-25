@@ -13,12 +13,13 @@ final difficultyProvider = StateProvider<Difficulty>((ref) => Difficulty.any);
 class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final category = useProvider(categoryProvider);
     return Container(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFD4418E), Color(0xFF0652C5)],
+        gradient: LinearGradient(
+          colors: [category.state.gradient.first, category.state.gradient.last],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
