@@ -18,7 +18,7 @@ final quizQuestionsProvider = FutureProvider.autoDispose<List<Question>>(
   final difficulty = ref.watch(difficultyProvider);
 
   return ref.watch(quizRepositoryProvider).getQuestions(
-        numQuestions: 5,
+        numQuestions: 10,
         categoryId: category.state.categoryID,
         difficulty: difficulty.state,
       );

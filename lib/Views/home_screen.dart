@@ -33,11 +33,12 @@ class HomeScreen extends HookWidget {
             Column(
               children: [
                 Text(
-                  'Trivia App',
+                  '10 Questions',
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 30.0,
+                    fontSize: 50.0,
                     fontWeight: FontWeight.w500,
+                    fontFamily: 'Lobster',
                   ),
                 ),
               ],
@@ -49,7 +50,6 @@ class HomeScreen extends HookWidget {
               indent: 20.0,
               endIndent: 20.0,
             ),
-            // const SizedBox(height: 100.0),
             Expanded(
               child: Container(
                 margin: EdgeInsets.fromLTRB(30, 0, 30, 0),

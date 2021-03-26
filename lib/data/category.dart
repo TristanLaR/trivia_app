@@ -56,7 +56,7 @@ List<Category> categories = [
   Category(
       categoryID: 19,
       categoryName: "Mathematics",
-      gradient: [Color(0xFFef32d9), Color(0xFFef32d9)]),
+      gradient: [Color(0xFFef32d9), Color(0xFFf12711)]),
   Category(
       categoryID: 20,
       categoryName: "Mythology",
