@@ -4,4 +4,13 @@ A simple Trivia App. Can you get all 10 Questions right?
 
 ## Screenshots
 
-![](screenshots\Home.jpg) ![](screenshots\Politics_Home.jpg) ![](screenshots/Politics_Quiz.jpg) ![](screenshots\VideoGames_Home.jpg) ![](screenshots/Genereal_Home.jpg) ![](screenshots/General_Results.jpg) ![](screenshots/Computer_Quiz.jpg) ![](screenshots/Theater_Quiz.jpg)
+<p float="left">
+  <img src="screenshots\Home.jpg" width="250" />
+  <img src="screenshots\Politics_Home.jpg" width="250" /> 
+  <img src="screenshots\Politics_Quiz.jpg" width="250" />
+  <img src="screenshots\VideoGames_Home.jpg" width="250" />
+  <img src="screenshots\Genereal_Home.jpg" width="250" />
+  <img src="screenshots\General_Results.jpg" width="250" />
+  <img src="screenshots\Computer_Quiz.jpg" width="250" />
+  <img src="screenshots\Theater_Quiz.jpg" width="250" />
+</p>
