@@ -1,6 +1,8 @@
 # 10 Questions
 
-A simple Trivia App. Can you get all 10 Questions right?
+A simple Trivia App. Written with Flutter
+<br>
+Questions provided from https://opentdb.com/
 
 ## Screenshots
 
